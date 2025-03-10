@@ -1,5 +1,6 @@
 # dependencies (bun install)
 .idea/
+public/
 node_modules
 
 # output

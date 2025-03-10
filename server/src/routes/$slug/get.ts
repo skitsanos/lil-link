@@ -1,5 +1,14 @@
 // routes/$slug/get.ts
 import {aql, Database} from 'arangojs';
+import {join} from 'path';
+
+const getAssetsFile = (path: string) =>
+{
+    const publicPath = join(import.meta.dir, '..', '..', '..', 'public');
+
+    const assetFilePath = join(publicPath, path);
+    return Bun.file(assetFilePath);
+};
 
 /**
  * Handles redirection for shortened URLs
@@ -14,8 +23,14 @@ export default async (req: Request): Promise<Response> =>
         const url = new URL(req.url);
         const slug = url.pathname.substring(1); // Remove leading slash
 
+        const asseet = getAssetsFile(url.pathname);
+
         // Skip API paths and other special paths
-        if (slug.startsWith('api/') ||
+        if (await asseet.exists())
+        {
+            return new Response(asseet.stream());
+        }
+        else if (slug.startsWith('api/') ||
             slug === 'favicon.ico' ||
             slug === 'robots.txt' ||
             slug === '')

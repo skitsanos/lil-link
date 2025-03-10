@@ -95,9 +95,6 @@ const handler = async (req: Request): Promise<Response> =>
 
         const existingUrl = await checkCursor.next();
 
-        console.log(userId, urlId);
-        console.log(existingUrl);
-
         if (!existingUrl)
         {
             return Response.json(
