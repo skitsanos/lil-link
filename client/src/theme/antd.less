@@ -1,0 +1,59 @@
+.ant-app {
+  height: 100%;
+}
+
+
+.ant-pro-sider-logo h1 {
+  font-weight: bold !important;
+}
+
+
+.ant-page-header-heading-title {
+  font-weight: @font-weight-light !important;
+}
+
+.ant-menu *,
+.ant-menu-item * {
+  transition: none !important;
+}
+
+.ant-page-header-breadcrumb {
+  padding-bottom: calc(@margin-size / 2);
+  margin-bottom: @margin-size;
+  border-bottom: solid 1px #ccc;
+}
+
+.ant-btn, button, .ant-menu-item {
+  box-shadow: none !important;
+  letter-spacing: @font-letter-spacing !important;
+}
+
+#root {
+  .ant-pro-sider-light {
+    .ant-pro-sider-logo * {
+      color: #fff !important;
+    }
+
+    .ant-menu-item {
+      color: #f3eef9;
+    }
+
+    .ant-menu-item-selected {
+      background-color: #453d51;
+      color: #fff;
+      border-radius: @radius;
+    }
+
+    .ant-menu-item-active {
+      background-color: lighten(#5e536e, 5%) !important;
+      color: #f3eef9 !important;
+      border-radius: @radius;
+    }
+
+    .ant-pro-sider-collapsed-button {
+      background-color: #453d51;
+      color: #fff;
+      border: solid 2px #fff;
+    }
+  }
+}
