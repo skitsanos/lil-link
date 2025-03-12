@@ -1,4 +1,4 @@
-import {DashboardOutlined, FolderOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
+import {DashboardOutlined, LinkOutlined, LogoutOutlined, SettingOutlined} from '@ant-design/icons';
 
 const sidebarMenu = {
     route: {
@@ -11,27 +11,20 @@ const sidebarMenu = {
             },
 
             {
-                path: '/files',
-                name: 'Files',
-                icon: <FolderOutlined/>
-            },
-
-            // {
-            //     path: '/chat',
-            //     name: 'Chat',
-            //     icon: <MessageOutlined/>
-            // },
-
-            {
-                path: '/users',
-                icon: <UserOutlined/>,
-                name: 'Users'
+                path: '/links',
+                name: 'Links',
+                icon: <LinkOutlined/>
             },
 
             {
                 path: '/settings',
                 icon: <SettingOutlined/>,
                 name: 'Settings'
+            },
+            {
+                path: '/logout',
+                name: 'Logout',
+                icon: <LogoutOutlined/>
             }
         ]
     }
