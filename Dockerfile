@@ -20,10 +20,15 @@ FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules server/node_modules
 COPY . .
 
+# Debug to see what's in the build context
+RUN ls -la server/
+RUN ls -la server/ || true
+
 # copy production dependencies and source code into final image
 FROM base AS release
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/server/src ./src
+# Try a different approach for the public folder
 COPY --from=prerelease /usr/src/app/server/public ./public
 COPY --from=prerelease /usr/src/app/server/tsconfig.json .
 COPY --from=prerelease /usr/src/app/server/package.json .
