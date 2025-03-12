@@ -8,11 +8,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "postinstall": "umi setup",
+    "postinstall": "npx umi setup",
     "start": "umi dev",
-    "build": "NODE_ENV=production umi build",
-    "deploy": "netlify deploy --prod",
-    "depupdates": "npx npm-check-updates -u"
+    "build": "NODE_ENV=production umi build"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
@@ -25,7 +23,6 @@
     "rc-virtual-list": "^3.18.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-entities": "^1.3.0",
     "umi": "^4.4.6",
     "umi-request": "^1.4.0",
     "zustand": "^5.0.3"
@@ -33,7 +30,7 @@
   "devDependencies": {
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@umijs/mako": "^0.7.9",
+    "@umijs/mako": "^0.11.6",
     "chance": "^1.1.12"
   }
 }

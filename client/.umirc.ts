@@ -34,7 +34,8 @@ export default ({
         INITIAL_SESSION: null
     },
 
-    mako: {},
+    //mako: {},
+    mfsu: {},
 
     svgr: {},
 
