@@ -6,15 +6,13 @@ WORKDIR /usr/src/app
 FROM base AS install
 RUN mkdir -p /temp/dev
 COPY server/package.json /temp/dev/
-# Check if lockfile exists and copy the correct one
-COPY server/bun.lockb server/bun.lock* /temp/dev/ 2>/dev/null || true
-RUN cd /temp/dev && bun install --frozen-lockfile
+# Install without requiring the lockfile
+RUN cd /temp/dev && bun install
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
 COPY server/package.json /temp/prod/
-COPY server/bun.lockb server/bun.lock* /temp/prod/ 2>/dev/null || true
-RUN cd /temp/prod && bun install --frozen-lockfile --production
+RUN cd /temp/prod && bun install --production
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
