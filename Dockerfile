@@ -31,6 +31,8 @@ COPY --from=prerelease /usr/src/app/server/public ./public
 COPY --from=prerelease /usr/src/app/server/tsconfig.json .
 COPY --from=prerelease /usr/src/app/server/package.json .
 
+RUN ls public
+
 # run the app
 USER bun
 EXPOSE 3000/tcp
