@@ -13,6 +13,7 @@ RUN cd /temp/dev && bun install
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
 COPY server/package.json /temp/prod/
+COPY server/public /temp/prod/
 RUN cd /temp/prod && bun install --production
 
 # copy node_modules from temp directory
