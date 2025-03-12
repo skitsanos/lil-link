@@ -1,18 +1,19 @@
 # use the official Bun image
-# see all versions at https://hub.docker.com/r/oven/bun/tags
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
 # install dependencies into temp directory
-# this will cache them and speed up future builds
 FROM base AS install
 RUN mkdir -p /temp/dev
-COPY server/package.json server/bun.lock /temp/dev/
+COPY server/package.json /temp/dev/
+# Check if lockfile exists and copy the correct one
+COPY server/bun.lockb server/bun.lock* /temp/dev/ 2>/dev/null || true
 RUN cd /temp/dev && bun install --frozen-lockfile
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
-COPY server/package.json server/bun.lock /temp/prod/
+COPY server/package.json /temp/prod/
+COPY server/bun.lockb server/bun.lock* /temp/prod/ 2>/dev/null || true
 RUN cd /temp/prod && bun install --frozen-lockfile --production
 
 # copy node_modules from temp directory
