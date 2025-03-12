@@ -32,20 +32,6 @@ export default ({
         FEATURE_SSL_ENABLED: true,
 
         INITIAL_SESSION: null
-
-        //     INITIAL_SESSION:
-        //         {
-        //             'session': {
-        //                 'user': {
-        //                     '_key': '177651341',
-        //                     'createdOn': 1696934748132,
-        //                     'email': 'info@skitsanos.com',
-        //                     'lastLogin': 1709038324097,
-        //                     'updatedOn': 1709038324097,
-        //                     'gravatar':
-        // 'https://www.gravatar.com/avatar/df4fd31987b27934b23f90da7af2feb7?d=robohash&s=150' }, 'token':
-        // 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.IntcInVzZXJJZFwiOlwiMTc3NjUxMzQxXCIsXCJleHBpcmVzT25cIjoxNzA5MDQxOTQ0NTEyfSI.7NsFhzhDPHH0Gf7IObsskxVWL_7Fdge5uWKviV771SE1FN72eeFH04Zet12WWx_Kx_1cmTrffXy7jB777tl8MQ'
-        // } }
     },
 
     mako: {},
