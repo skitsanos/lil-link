@@ -12,6 +12,8 @@ async function initializeDatabase()
         }
     };
 
+    console.log('Connecting to ArangoDB...');
+
     const systemDb = new Database(dbConfig);
     const dbName = process.env.ARANGO_DB || 'auth_db';
 

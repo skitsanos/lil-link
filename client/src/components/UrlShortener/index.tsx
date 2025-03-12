@@ -4,7 +4,16 @@ import {CopyOutlined} from '@ant-design/icons';
 import {useRequest} from 'ahooks';
 import {apiPost, endpoints} from '@/api';
 
-const UrlShortener: FC = () =>
+interface UrlShortenerProps
+{
+    autoFocus?: boolean;
+    refresh?: () => void;
+}
+
+const UrlShortener: FC<UrlShortenerProps> = ({
+                                                 refresh,
+                                                 autoFocus
+                                             }) =>
 {
     const [form] = Form.useForm();
 
@@ -33,11 +42,14 @@ const UrlShortener: FC = () =>
     {
         if (data)
         {
-            console.log(data);
-            //refGeneratedUrl.current.input.value = data.data.shortUrl;
             notification.info({
                 message: 'URL generated'
             });
+
+            if (refresh)
+            {
+                refresh();
+            }
         }
     }, [data]);
 
@@ -50,8 +62,6 @@ const UrlShortener: FC = () =>
 
     const copyToClipboard = () =>
     {
-        console.log(refGeneratedUrl.current?.input.value);
-
         const {value} = refGeneratedUrl.current.input;
 
         if (value)
@@ -91,9 +101,10 @@ const UrlShortener: FC = () =>
                            }
                        ]}>
                 <Input autoCapitalize={'off'}
-                       autoFocus={true}
+                       autoFocus={autoFocus}
                        autoSave={'off'}
-                       autoCorrect={'off'}/>
+                       autoCorrect={'off'}
+                       placeholder={'Insert your long url here'} />
             </Form.Item>
 
             <Form.Item className={'ml-xs'}>

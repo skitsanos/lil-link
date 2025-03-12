@@ -20,6 +20,7 @@ tasks:
   client:
     cmds:
       - cd client && bunx umi dev
+
   test-server:
     cmds:
       - |
@@ -28,3 +29,13 @@ tasks:
         --variable API_ENDPOINT={{.BASE_URL}}/api \
         --variable TEST_USERNAME=user_{{now | unixEpoch}} \
         tests/api.hurl
+
+  build:
+    cmds:
+      - cd client && bunx umi build
+      - rm -rf server/public/*
+      - cp -r client/dist/* server/public
+
+  docker-build:
+    cmds:
+      - docker build -t lillinks --progress plain .

@@ -1,5 +1,5 @@
 .idea/
 dist
-.umi*
+.umi*/
 node_modules/
 Taskfile.dev.yaml

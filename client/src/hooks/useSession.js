@@ -7,30 +7,33 @@ const useSession = create((set) => ({
              ? JSON.parse(localStorage.getItem(SESSION_STORAGE_KEY))
              : INITIAL_SESSION,
 
-    login: (newSession) =>
-    {
-
-        set({
-            ...newSession,
+    login: (sessionData) => {
+        // Add creation timestamp
+        const newSession = {
+            ...sessionData,
             createdOn: new Date().getTime()
+        };
+
+        // Update state
+        set({
+            session: newSession
         });
 
+        // Store in localStorage
         localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(newSession));
     },
 
-    logout: () =>
-    {
+    logout: () => {
         set({
             session: null
         });
+
         localStorage.removeItem(SESSION_STORAGE_KEY);
     },
 
-    restoreSessionFromLocalStorage: () =>
-    {
+    restoreSessionFromLocalStorage: () => {
         const storedSession = localStorage.getItem(SESSION_STORAGE_KEY);
-        if (storedSession)
-        {
+        if (storedSession) {
             set({session: JSON.parse(storedSession)});
         }
     }

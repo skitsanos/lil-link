@@ -1,22 +1,15 @@
 import ContentArea from '@/components/ContentArea';
 import {gridGutter} from '@/defaults';
-import useLayoutSwitcher from '@/hooks/useLayoutSwitcher';
 import ProCard from '@ant-design/pro-card';
 import {Divider, Statistic} from 'antd';
+import useSession from '@/hooks/useSession';
 
 const Page = () =>
 {
-    const {
-        layout,
-        toggle
-    } = useLayoutSwitcher();
+    const {session} = useSession();
 
     return <ContentArea title={'Welcome'}
-                        subTitle={'You are logged as Demo user'}
-                        extra={[
-                            <a key={'toggle-layout'}
-                               onClick={toggle}>Toggle layout ({layout})</a>
-                        ]}>
+                        subTitle={`You are logged as ${session.user.email} user`}>
         <ProCard direction={'row'}
                  ghost={true}
                  gutter={gridGutter}
@@ -24,11 +17,11 @@ const Page = () =>
                  subTitle={'Your current situation'}>
 
             <ProCard>
-                <Statistic title={'Users'}
+                <Statistic title={'Links'}
                            value={256}/>
             </ProCard>
             <ProCard>
-                <Statistic title={'Page Views'}
+                <Statistic title={'Clicks'}
                            value={77}
                            suffix={'K'}/>
             </ProCard>
@@ -44,9 +37,8 @@ const Page = () =>
         <ProCard bordered={true}
                  direction={'column'}
                  gutter={gridGutter}>
-            Some long content...
+            Placeholder for some text data
 
-            {Array.from({length: 20}, (_el, key) => <ProCard key={key}>Card #{key}</ProCard>)}
         </ProCard>
     </ContentArea>;
 };

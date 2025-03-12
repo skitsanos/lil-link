@@ -23,6 +23,22 @@ export default async (req: Request): Promise<Response> =>
         const url = new URL(req.url);
         const slug = url.pathname.substring(1); // Remove leading slash
 
+        if ([
+            'links',
+            'login',
+            'logout',
+            'settings'
+        ].includes(slug))
+        {
+            const fileIndex = Bun.file(join(import.meta.dir, '..', '..', '..', 'public', 'index.html'));
+
+            return new Response(fileIndex.stream(), {
+                headers: {
+                    'content-type': 'text/html'
+                }
+            });
+        }
+
         const asseet = getAssetsFile(url.pathname);
 
         // Skip API paths and other special paths

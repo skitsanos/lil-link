@@ -27,9 +27,9 @@ const authorizationHeader = () =>
         //
     }
 
-    const {session} = rawParsed as Record<string, any>;
+    const session = rawParsed as Record<string, any>;
 
-    const {token} = session as Record<string, any>;
+    const {token} = session as { token: string };
 
     return token ? {'Authorization': `Bearer ${token}`} : {};
 };
