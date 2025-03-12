@@ -3,7 +3,7 @@ export const app = {
 };
 
 export const hasNoLayout = [
-    '/login'
+    '/login',
 ];
 
 export const publicRoutes = [

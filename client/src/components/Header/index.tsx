@@ -1,5 +1,7 @@
-import {Button, Col, Flex, Row, Space} from 'antd';
+import {Button, Col, ConfigProvider, Flex, Row, Space, theme} from 'antd';
 import {FC} from 'react';
+import useSession from '@/hooks/useSession';
+import {history} from 'umi';
 
 interface HeaderProps
 {
@@ -8,18 +10,38 @@ interface HeaderProps
 
 const Header: FC<HeaderProps> = ({title = 'My App'}) =>
 {
+    const {session} = useSession();
 
-    return <Row justify={'center'} className={'app-header'}>
-        <Col xs={20} xxl={18}>
+    return <ConfigProvider theme={{
+        algorithm: theme.darkAlgorithm,
+        inherit: false
+    }}>
+        <Row justify={'center'}>
+        <Col xs={20}
+             xxl={18}>
             <Flex justify={'space-between'}>
                 <h2>{title}</h2>
 
-                <Space>
-                    <Button>Login/Signup</Button>
-                </Space>
+                {!session && <Space>
+                    <Button type={'link'}
+                            onClick={() =>
+                            {
+                                history.push('/login');
+                            }}>Login/Signup</Button>
+                </Space>}
+
+                {session && <Space>
+                    <Button type={'link'}>Dashboard</Button>
+                    <Button type={'link'}
+                            onClick={() =>
+                            {
+                                history.push('/logout');
+                            }}>Logout</Button>
+                </Space>}
             </Flex>
         </Col>
-    </Row>;
+    </Row>
+    </ConfigProvider>;
 };
 
 export default Header;

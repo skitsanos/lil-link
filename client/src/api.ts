@@ -5,7 +5,8 @@ const url = '/api';
 
 export const endpoints = {
     login: `${url}/auth/login`,
-    url: `${url}/url`,
+    signup: `${url}/auth/signup`,
+    url: `${url}/url`
 };
 
 const authorizationHeader = () =>

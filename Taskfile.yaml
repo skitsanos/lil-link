@@ -1,0 +1,30 @@
+version: 3
+
+env:
+  PORT: 8000
+  BASE_URL: http://localhost:{{.PORT}}
+  SESSION_SECRET: ""
+  ARANGO_URL: http://localhost:8529
+  ARANGO_DB: lillinks
+  ARANGO_USERNAME: root
+  ARANGO_PASSWORD: ""
+  JWT_SECRET: 83HxEzCZa5ErxBMSQGhR3QHQCAStwEw3
+
+tasks:
+  db-init:
+    cmds:
+      - bun run server/src/db-init.ts
+  server:
+    cmds:
+      - bun run --watch server/src/index.ts
+  client:
+    cmds:
+      - cd client && bunx umi dev
+  test-server:
+    cmds:
+      - |
+        hurl --very-verbose \
+        --variable BASE_URL={{.BASE_URL}} \
+        --variable API_ENDPOINT={{.BASE_URL}}/api \
+        --variable TEST_USERNAME=user_{{now | unixEpoch}} \
+        tests/api.hurl

@@ -1,12 +1,11 @@
 import {apiPost, endpoints} from '@/api';
 import useSession from '@/hooks/useSession';
 import {useRequest} from 'ahooks';
-import {Avatar, Button, Divider, Flex, Form, Input} from 'antd';
+import {Button, Card, Flex, Form, Input, Tabs} from 'antd';
 import {useEffect, useState} from 'react';
 import {history} from 'umi';
-import {ReactComponent as IconLogo} from '@/assets/logo.svg';
 
-const Index = () =>
+const LoginSignupForm = ({mode}:{mode: 'register' | 'signIn'}) =>
 {
     const {login} = useSession();
 
@@ -15,7 +14,7 @@ const Index = () =>
         error,
         loading,
         run
-    } = useRequest(payload => apiPost(endpoints.login, {
+    } = useRequest(payload => apiPost(mode==='register'? endpoints.signup: endpoints.login, {
         data: payload,
         getResponse: true
     }), {manual: true});
@@ -26,7 +25,8 @@ const Index = () =>
     //submit the form data to an API
     const onFinish = (values) =>
     {
-        run(values);
+        //run(values);
+        console.log(values);
     };
 
     //watch for the possible API errors
@@ -69,60 +69,108 @@ const Index = () =>
         }
     }, [data]);
 
+    return <>
+        <div className={'silent mb'}>
+            {mode === 'register'
+             ? 'Create an account to manage your shortened URLs'
+             : 'Sign in to your account'}
+        </div>
+        <Form layout={'vertical'}
+              onFinish={onFinish}>
+            <Form.Item label={'Email'}
+                       name={'email'}
+                       rules={[
+                           {
+                               required: true,
+                               message: 'Email is required'
+                           },
+                           {
+                               type: 'email',
+                               message: 'Invalid email address'
+                           }
+                       ]}>
+                <Input autoFocus={true}
+                       autoCapitalize={'off'}
+                       autoComplete={'off'}
+                       autoCorrect={'off'}/>
+            </Form.Item>
+
+            <Form.Item label={'Password'}
+                       name={'password'}
+                       rules={[
+                           {
+                               required: true,
+                               message: 'Password is required'
+                           },
+                           {
+                               min: 6,
+                               message: 'Password must be at least 6 characters'
+                           }
+                       ]}>
+                <Input.Password autoCapitalize={'off'}
+                                autoComplete={'off'}
+                                autoCorrect={'off'}/>
+            </Form.Item>
+
+            <Button type={'primary'}
+                    loading={loading}
+                    htmlType="submit"
+                    block>
+                {mode === 'register' ? 'Create Account' : 'Sign In'}
+            </Button>
+        </Form>
+    </>;
+};
+
+const Index = () =>
+{
+    const [mode, setMode] = useState<'register' | 'signIn'>('register');
+
     return <div className={'page-login'}>
+
         <Flex align={'center'}
-              gap={'middle'}>
-            <Avatar icon={<IconLogo/>}
-                    className={'logo'}
-                    size={128}/>
-            <Divider type={'vertical'}
-                     style={{}}/>
-
-            <div className={'login-box'}>
+              style={{
+                  //height: '100vh',
+              }}
+              gap={32}
+              justify={'center'}>
+            <Card className="w-full max-w-md"
+                  style={{
+                      minWidth: '400px'
+                  }}>
                 <h1>{APP_NAME}</h1>
+                <Flex gap={16}
+                      className="flex items-center gap-2 mb-2">
+                    <h3>Welcome to URL Shortener</h3>
+                </Flex>
 
-                {!authError && (<Form onFinish={onFinish}
-                                      autoCapitalize={'off'}
-                                      autoComplete={'off'}
-                                      initialValues={{remember: true}}>
-                    <Form.Item name={'username'}
-                               rules={[
-                                   {
-                                       required: true,
-                                       message: 'Username is required'
-                                   }
-                               ]}>
-                        <Input placeholder={'Username'}/>
-                    </Form.Item>
+                <Tabs items={[
+                    {
+                        key: 'register',
+                        label: 'Create Account',
+                        children: <LoginSignupForm mode={mode}/>
+                    },
+                    {
+                        key: 'signIn',
+                        label: 'Sign In',
+                        children: <LoginSignupForm mode={mode}/>
+                    }
+                ]}
+                      onChange={(key) => setMode(key as 'register' | 'signIn')}/>
+            </Card>
 
-                    <Form.Item name={'password'}
-                               rules={[
-                                   {
-                                       required: true,
-                                       message: 'Password is missing'
-                                   }
-                               ]}>
-                        <Input.Password placeholder={'Password'}/>
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button loading={loading}
-                                type={'primary'}
-                                htmlType={'submit'}>Let me in</Button>
-                    </Form.Item>
-                </Form>)}
-
-                {authError && <div>
-                    <div className={'mb align-center mb'}><h3 className={'red'}>{errMessage}</h3></div>
-                    <div className={'mt'}>
-                        <Button loading={loading}
-                                type={'default'}
-                                onClick={() => setAuthError(false)}>
-                            Try again
-                        </Button>
-                    </div>
-                </div>}
-            </div>
+            <Flex gap={8}
+                  vertical={true}
+                  justify={'center'}
+                  style={{
+                      maxWidth: '400px'
+                  }}>
+                <h2 className="text-2xl">Share Links Efficiently</h2>
+                <p className="text-lg">
+                    Create shortened URLs that are easy to share and track. Monitor clicks
+                    and manage all your links in one place.
+                </p>
+            </Flex>
         </Flex>
     </div>;
 };

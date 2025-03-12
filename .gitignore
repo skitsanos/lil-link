@@ -1,3 +1,5 @@
 .idea/
+dist
+.umi*
 node_modules/
 Taskfile.dev.yaml

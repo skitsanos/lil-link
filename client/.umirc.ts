@@ -26,7 +26,7 @@ export default ({
 
     define: {
         // the following are the default values for the application, and they are defined in @types/typings.d.ts
-        APP_NAME: 'My Dashboard',
+        APP_NAME: 'Lil\'Link',
         APP_VERSION: `${manifest.version} (beta/${dayjs().format('YYYY-MM-DD')})`,
         FEATURE_SMTP_ENABLED: false,
         FEATURE_SSL_ENABLED: true,

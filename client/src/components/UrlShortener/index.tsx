@@ -98,6 +98,7 @@ const UrlShortener: FC = () =>
 
             <Form.Item className={'ml-xs'}>
                 <Button htmlType={'submit'}
+                        type={'primary'}
                         loading={loading}>Generate</Button>
             </Form.Item>
         </Form>

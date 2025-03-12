@@ -8,7 +8,8 @@ import {useEffect} from 'react';
 import {Link, Outlet, useLocation} from 'umi';
 import {ReactComponent as IconLogo} from '@/assets/logo.svg';
 import UrlShortener from '@/components/UrlShortener';
-import Header from '@/components/Header';
+import {LinkOutlined, LockOutlined} from '@ant-design/icons';
+import ApplicationTheme from '@/theme';
 
 const Container = () =>
 {
@@ -28,31 +29,58 @@ const Container = () =>
 
     const menuItemRender = (item, dom) => <Link to={item.path}>{dom}</Link>;
 
+    console.log(session)
+
     return <App message={{maxCount: 1}}>
-        <ConfigProvider locale={enUS}>
-            <Header title={'Lil Link'}/>
+        <ConfigProvider locale={enUS} theme={ApplicationTheme}>
+            {!session?.token && !hasNoLayout.includes(document.location.pathname) && <>
+                <ProLayout layout={'top'}
+                           fixedHeader={true}
+                           location={{
+                               pathname: location.pathname
+                           }}
+                           route={{
+                               path: '/',
+                               routes: [
+                                   {
+                                       path: '/login',
+                                       icon: <LockOutlined/>,
+                                       name: 'Login/Signup'
+                                   }
+                               ]
+                           }}
+                           title={'LilLink'}
+                           logo={<LinkOutlined/>}
+                           menuProps={{
+                               style: {
+                                   width: '100%',
+                                   justifyContent: 'flex-end'
+                               }
+                           }}
+                           menuItemRender={menuItemRender}>
+                    <Flex align={'center'}
+                          style={{
+                              height: '100% !important'
+                          }}>
 
-            {!session && <Flex align={'center'}
-                               style={{
-                                   height: '100%'
-                               }}>
+                        <Row className={'w-100'}
+                             justify={'center'}>
+                            <Col xs={24}
+                                 md={12}>
+                                <h2>LilLink URL Shortener</h2>
+                                <p className={'silent'}>Shorten your long URLs in one click</p>
+                                <Card>
+                                    <UrlShortener/>
+                                </Card>
+                            </Col>
 
-                <Row className={'w-100'}
-                     justify={'center'}>
-                    <Col xs={24}
-                         md={12}>
-                        <h2>LilLink URL Shortener</h2>
-                        <p className={'silent'}>Shorten your long URLs in one click</p>
-                        <Card>
-                            <UrlShortener/>
-                        </Card>
-                    </Col>
+                        </Row>
 
-                </Row>
+                    </Flex>
+                </ProLayout>
+            </>}
 
-            </Flex>}
-
-            {!hasNoLayout.includes(location.pathname) && Boolean(session) && <ProLayout {...sidebarMenu}
+            {session?.token && !hasNoLayout.includes(document.location.pathname) && <ProLayout {...sidebarMenu}
                                                                                         layout={'side'}
                                                                                         fixSiderbar={true}
                                                                                         fixedHeader={true}
