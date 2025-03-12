@@ -19,8 +19,7 @@ const applicationTheme: ThemeConfig = {
         colorError: 'crimson',
         colorSuccess: '#73d98a',
         borderRadius: 3,
-        //colorBgBase:  //'#f0f2f5',
-        colorBgBase: '#fff'
+        colorBgBase: '#fff',
     },
 
     components: {
@@ -32,9 +31,8 @@ const applicationTheme: ThemeConfig = {
             siderBg: `${colorThemeMetal} !important`,
             lightSiderBg: `${colorThemeMetal} !important`
         },
-
         Menu: {
-            itemSelectedColor: '#fff !important'
+            itemSelectedColor: '#fff !important',
         },
 
         Avatar: {
