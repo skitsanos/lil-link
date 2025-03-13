@@ -4,6 +4,7 @@ import {usePagination} from 'ahooks';
 import UrlShortener from '@/components/UrlShortener';
 import {Button, Card, Pagination, Space, Table} from 'antd';
 import {DeleteOutlined, ReloadOutlined} from '@ant-design/icons';
+import {Link} from 'umi';
 
 const getTableData = async (url: string, {
     current,
@@ -42,7 +43,6 @@ export default () =>
 {
     const {
         data,
-        run,
         loading,
         pagination,
         refresh
@@ -58,12 +58,15 @@ export default () =>
         defaultPageSize: 10
     });
 
-    console.log(pagination)
+    console.log(pagination);
 
     const columns = [
         {
             title: 'Slug',
-            dataIndex: 'slug'
+            dataIndex: 'slug',
+            render: (value: string) => <Link title={value}
+                                             to={`/${value}`}
+                                             target={'_blank'}>{value}</Link>
         },
         {
             title: 'Long URL',
@@ -75,7 +78,7 @@ export default () =>
         {
             title: '',
             width: 100,
-            render: (record) => <Space>
+            render: (_record: { _key: string }) => <Space>
                 <Button icon={<DeleteOutlined/>}
                         disabled={true}
                         type={'link'}/>
@@ -99,7 +102,7 @@ export default () =>
                        showQuickJumper={true}
                        showSizeChanger={true}
                        style={{
-                           marginTop: 16,
+                           marginTop: 16
                        }}/>
         </Card>
     </ContentArea>;
