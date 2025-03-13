@@ -3,32 +3,61 @@ import {gridGutter} from '@/defaults';
 import ProCard from '@ant-design/pro-card';
 import {Divider, Statistic} from 'antd';
 import useSession from '@/hooks/useSession';
+import {useRequest} from 'ahooks';
+import {apiGet, endpoints} from '@/api';
 
 const Page = () =>
 {
     const {session} = useSession();
 
+    const {
+        data,
+        loading
+    } = useRequest(() => apiGet(endpoints.stats));
+
+    console.log(data);
+
     return <ContentArea title={'Welcome'}
                         subTitle={`You are logged as ${session.user.email} user`}>
         <ProCard direction={'row'}
+                 loading={loading}
                  ghost={true}
                  gutter={gridGutter}
-                 title={'Stats'}
-                 subTitle={'Your current situation'}>
+                 title={'Activity'}
+                 subTitle={'Summary'}>
 
             <ProCard>
-                <Statistic title={'Links'}
-                           value={256}/>
+                <Statistic title={'Click/URL'}
+                           value={data?.data.urlActivitySummary.avgClicksPerUrl}/>
             </ProCard>
             <ProCard>
-                <Statistic title={'Clicks'}
-                           value={77}
-                           suffix={'K'}/>
+                <Statistic title={'Total Active'}
+                           value={data?.data.urlActivitySummary.totalActiveUrls}/>
             </ProCard>
             <ProCard>
-                <Statistic title={'Served data'}
-                           value={16}
-                           suffix={'Gb'}/>
+                <Statistic title={'Total Clicks'}
+                           value={data?.data.urlActivitySummary.totalClicks}/>
+            </ProCard>
+        </ProCard>
+
+        <ProCard direction={'row'}
+                 loading={loading}
+                 ghost={true}
+                 gutter={gridGutter}
+                 title={'Usage'}
+                 subTitle={'Status'}>
+
+            <ProCard>
+                <Statistic title={'Custom URLs'}
+                           value={data?.data.usageStatus.customUrls.total}/>
+            </ProCard>
+            <ProCard>
+                <Statistic title={'Expiting'}
+                           value={data?.data.usageStatus.expiringUrls}/>
+            </ProCard>
+            <ProCard>
+                <Statistic title={'Creation Rate'}
+                           value={data?.data.usageStatus.urlCreationRate.current}/>
             </ProCard>
         </ProCard>
 

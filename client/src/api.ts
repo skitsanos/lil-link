@@ -6,6 +6,7 @@ const url = '/api';
 export const endpoints = {
     login: `${url}/auth/login`,
     signup: `${url}/auth/signup`,
+    stats: `${url}/stats`,
     url: `${url}/url`
 };
 
