@@ -1,5 +1,5 @@
 # Client build stage with Node.js
-FROM node:20-alpine AS client-builder
+FROM node:24-alpine AS client-builder
 WORKDIR /usr/src/app
 # Copy client source
 COPY client/ ./client/
